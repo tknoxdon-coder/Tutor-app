@@ -1,379 +1,1659 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ganita Manjari Tutor OS — Class 9 CBSE Maths</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --green: #16a34a;
+      --green-soft: #f0fdf4;
+      --yellow: #d97706;
+      --yellow-soft: #fffbeb;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
 
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 48px;
+    }
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1d4ed8, #4f46e5);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .brand h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+    .brand p { font-size: 12px; color: var(--muted); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .save-badge {
+      font-size: 12px;
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid #bbf7d0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { background: var(--surface-2); border-color: #cbd5e1; }
+    .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+    .btn-sm { padding: 5px 10px; font-size: 12px; }
+    .btn-danger { color: var(--red); border-color: #fecaca; background: var(--red-soft); }
+    .btn-danger:hover { background: #fee2e2; }
+
+    nav.tabs {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    nav.tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    main {
+      max-width: 1220px;
+      margin: 22px auto 0;
+      padding: 0 20px;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .card-title { font-size: 15.5px; font-weight: 700; }
+    .card-sub { font-size: 12.5px; color: var(--muted); }
+
+    .kpi-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi-value { font-size: 26px; font-weight: 800; margin: 6px 0 4px; letter-spacing: -0.02em; }
+    .kpi-note { font-size: 12px; color: var(--muted); }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-blue { background: var(--primary-soft); color: var(--primary); }
+    .badge-green { background: var(--green-soft); color: var(--green); }
+    .badge-yellow { background: var(--yellow-soft); color: var(--yellow); }
+    .badge-red { background: var(--red-soft); color: var(--red); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple); }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+
+    .pill-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #bfdbfe;
+      border-color: var(--primary);
+    }
+    label.field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .check-row:hover { background: var(--surface-2); }
+    .check-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .check-row.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .chapter-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+    .chapter-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .watch-box {
+      background: #f8fafc;
+      border-left: 3px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12.5px;
+      color: #334155;
+      margin: 10px 0 12px;
+    }
+
+    .drawer {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      background: var(--surface-2);
+    }
+    .table-wrap { overflow-x: auto; }
+
+    .timer-display {
+      font-size: 42px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      margin: 8px 0;
+    }
+
+    .phase-chip {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      font-size: 12.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .phase-chip.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 13px;
+      margin-bottom: 6px;
+      transition: all 0.15s;
+    }
+    .option-btn:hover { background: var(--surface-2); }
+    .option-btn.correct { background: var(--green-soft); border-color: var(--green); color: #14532d; font-weight: 600; }
+    .option-btn.wrong { background: var(--red-soft); border-color: var(--red); color: #7f1d1d; }
+
+    .fee-btn {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .fee-paid { background: var(--green-soft); color: var(--green); border-color: #86efac; }
+    .fee-unpaid { background: var(--red-soft); color: var(--red); border-color: #fecaca; }
+
+    .empty-state {
+      text-align: center;
+      padding: 28px 16px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mb-12 { margin-bottom: 12px; }
+    .flex-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .space-between { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row selection:bg-indigo-100 selection:text-indigo-900">
-
-  <!-- ==================== MOBILE SIDEBAR BACKDROP ==================== -->
-  <div id="mobile-drawer-backdrop" class="hidden fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden" aria-hidden="true"></div>
-
-  <!-- ==================== DESKTOP SIDEBAR & MOBILE DRAWER ==================== -->
-  <aside
-    id="app-sidebar"
-    class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-slate-200 flex flex-col transform -translate-x-full lg:translate-x-0 lg:static lg:shrink-0 transition-transform duration-200 ease-out shadow-xl lg:shadow-none"
-    aria-label="Primary Navigation"
-  >
-    <!-- Brand Block -->
-    <div class="px-5 py-5 border-b border-slate-800 flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shrink-0 shadow-sm font-extrabold text-lg">
-          ∑
-        </div>
-        <div class="min-w-0">
-          <h1 class="text-sm font-bold text-white tracking-tight truncate">Ganita Manjari OS</h1>
-          <p class="text-[11px] text-slate-400 truncate">Class 9 CBSE • 2027–28</p>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo">GM</div>
+        <div>
+          <h1>Ganita Manjari Tutor OS</h1>
+          <p>Class 9 CBSE Maths • 14 Chapters • 2 Days/Week Schedule</p>
         </div>
       </div>
-      <button
-        id="btn-close-drawer"
-        type="button"
-        class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
-        aria-label="Close menu"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <div class="header-actions">
+        <span class="save-badge" id="saveStatus">Auto-Saved</span>
+        <button class="btn btn-sm" onclick="exportData()">Export JSON</button>
+        <label class="btn btn-sm" style="cursor:pointer;">
+          Import JSON
+          <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)" />
+        </label>
+        <button class="btn btn-sm btn-danger" onclick="resetAllData()">Reset</button>
+      </div>
     </div>
-
-    <!-- Navigation Links -->
-    <nav id="sidebar-nav" class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-      <!-- Rendered dynamically by JS so badges stay live -->
+    <nav class="tabs" id="tabNav">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="prep">My Prep (14 Ch)</button>
+      <button class="tab-btn" data-tab="calendar">Year Calendar</button>
+      <button class="tab-btn" data-tab="diagnostic">Basics & Diagnostic</button>
+      <button class="tab-btn" data-tab="students">Students & Scores</button>
+      <button class="tab-btn" data-tab="classroom">Class Room</button>
+      <button class="tab-btn" data-tab="logistics">Logistics & Fees</button>
     </nav>
+  </header>
 
-    <!-- Live Timer Mini-Pill in Sidebar (visible when any timer runs) -->
-    <div id="sidebar-timer-status" class="hidden mx-3 mb-3 px-3.5 py-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 text-xs flex items-center justify-between cursor-pointer">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="sidebar-timer-label" class="font-medium">Timer Running</span>
-      </div>
-      <span id="sidebar-timer-clock" class="font-mono font-bold text-white">00:00</span>
-    </div>
+  <main>
+    <!-- TAB 1: DASHBOARD -->
+    <section id="view-dashboard" class="view active"></section>
 
-    <!-- Sidebar Footer Info -->
-    <div class="p-4 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
-      <div class="flex items-center justify-between">
-        <span>NCERT 14-Chapter Edition</span>
-        <span class="inline-flex items-center gap-1 text-emerald-400 font-medium">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Auto-Saved
-        </span>
-      </div>
-      <p class="text-slate-500">Part I (Ch 1–8) &amp; Part II (Ch 9–14)</p>
-    </div>
-  </aside>
+    <!-- TAB 2: MY PREP -->
+    <section id="view-prep" class="view"></section>
 
-  <!-- ==================== MAIN WORKSPACE SHELL ==================== -->
-  <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+    <!-- TAB 3: YEAR CALENDAR -->
+    <section id="view-calendar" class="view"></section>
 
-    <!-- Sticky Top Header -->
-    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-200">
-      <div class="px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
-        <!-- Mobile Menu Button + Page Heading -->
-        <div class="flex items-center gap-3 min-w-0">
-          <button
-            id="btn-open-drawer"
-            type="button"
-            class="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
-            aria-label="Open navigation menu"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <div class="min-w-0">
-            <h2 id="header-page-title" class="text-base sm:text-lg font-bold text-slate-900 truncate">Dashboard</h2>
-            <p id="header-page-subtitle" class="text-xs text-slate-500 truncate hidden sm:block">Command center for self-prep, syllabus pacing &amp; student progress</p>
+    <!-- TAB 4: BASICS & DIAGNOSTIC -->
+    <section id="view-diagnostic" class="view"></section>
+
+    <!-- TAB 5: STUDENTS & SCORES -->
+    <section id="view-students" class="view"></section>
+
+    <!-- TAB 6: CLASS ROOM -->
+    <section id="view-classroom" class="view"></section>
+
+    <!-- TAB 7: LOGISTICS & FEES -->
+    <section id="view-logistics" class="view"></section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "ganita_manjari_tutor_os_v2_2days";
+
+    const CHAPTER_META = [
+      { id: 1, part: "Part I", title: "Orienting Yourself: The Use of Coordinates", prepMonth: "Dec", teachMonth: "Apr", exemplar: false, pillars: ["geometry", "algebra"], watch: "Cartesian plane, distance & midpoint formulas. Quick early confidence builder." },
+      { id: 2, part: "Part I", title: "Introduction to Linear Polynomials", prepMonth: "Dec", teachMonth: "Apr", exemplar: false, pillars: ["algebra"], watch: "Degree, linear growth/decay, slope & y-intercept. Connect directly to Ch 1 graphs." },
+      { id: 3, part: "Part I", title: "The World of Numbers", prepMonth: "Dec", teachMonth: "May", exemplar: false, pillars: ["numbers"], watch: "Irrationality proofs of √2 and √3 require clean CBSE contradiction steps." },
+      { id: 4, part: "Part I", title: "Exploring Algebraic Identities", prepMonth: "Dec", teachMonth: "May", exemplar: true, pillars: ["algebra"], watch: "Geometric models of identities, quadratic factorisation & rational expressions. Drill heavily." },
+      { id: 5, part: "Part I", title: "I'm Up and Down, and Round and Round (Circles)", prepMonth: "Jan", teachMonth: "Nov", exemplar: true, pillars: ["geometry"], watch: "Chords, subtended angles, cyclic quadrilaterals. Enforce Given → To Prove → Proof format." },
+      { id: 6, part: "Part I", title: "Measuring Space: Perimeter and Area", prepMonth: "Jan", teachMonth: "Aug", exemplar: false, pillars: ["mensuration"], watch: "Heron's formula, Brahmagupta's formula, circles & sectors. Watch out for unit conversions." },
+      { id: 7, part: "Part I", title: "The Mathematics of Maybe: Probability", prepMonth: "Jan", teachMonth: "Nov", exemplar: false, pillars: ["data"], watch: "Empirical vs theoretical probability, tree diagrams. High-scoring breather chapter." },
+      { id: 8, part: "Part I", title: "Predicting What Comes Next: Sequences", prepMonth: "Jan", teachMonth: "Oct", exemplar: true, pillars: ["numbers", "algebra"], watch: "AP & GP (newly added to Class 9). Pre-solve every word problem before class." },
+      { id: 9, part: "Part II", title: "Propositions and their Converses", prepMonth: "Feb", teachMonth: "Jun", exemplar: false, pillars: ["geometry"], watch: "Logical statements, converses, proofs & counterexamples. Sets up all geometry proofs." },
+      { id: 10, part: "Part II", title: "How Quantities Combine: Understanding Data", prepMonth: "Feb", teachMonth: "Aug", exemplar: false, pillars: ["data"], watch: "Weighted mean, mixtures & stacked bar charts. Check calculation accuracy." },
+      { id: 11, part: "Part II", title: "The World of Algorithms", prepMonth: "Feb", teachMonth: "Jul", exemplar: false, pillars: ["numbers", "data"], watch: "Divisors, prime testing & Euclid's subtraction algorithm for GCD/HCF." },
+      { id: 12, part: "Part II", title: "Quadrilaterals", prepMonth: "Feb", teachMonth: "Jul", exemplar: true, pillars: ["geometry"], watch: "Parallelogram properties, Midpoint Theorem, medians & centroids. Do not rush proofs." },
+      { id: 13, part: "Part II", title: "Two Variables, One Line", prepMonth: "Mar", teachMonth: "Oct", exemplar: true, pillars: ["algebra", "geometry"], watch: "Pairs of linear equations (substitution, elimination, consistency ratios a1/a2, b1/b2, c1/c2)." },
+      { id: 14, part: "Part II", title: "Math of Space: Surface Area and Volume", prepMonth: "Mar", teachMonth: "Dec", exemplar: false, pillars: ["mensuration"], watch: "Cones, spheres, hemispheres, pyramids. Pure formula recall + arithmetic discipline." }
+    ];
+
+    const PREP_STEPS = [
+      "Read chapter text & in-text puzzles",
+      "Solved all exercises by hand in Master Notebook",
+      "Color-coded Yellow & Red tricky questions",
+      "Practiced CBSE proof / step-marking format",
+      "Reviewed Exemplar / extra twist questions"
+    ];
+
+    const LAUNCH_CHECKLIST = [
+      "Download Ganita Manjari Part I & Part II PDFs (or buy physical copies)",
+      "Buy dedicated thick register for your Master Notebook",
+      "Confirm 2 days/week schedule, monthly fee & location with parents",
+      "Complete Chapters 1–14 self-prep by mid-March",
+      "Blind re-solve all Red-Tag questions in late March",
+      "Send late-February / early-March start-date confirmation message"
+    ];
+
+    const PILLARS = [
+      {
+        id: "numbers",
+        name: "Number Fluency & Exponents",
+        chapters: "Ch 3, Ch 8, Ch 11",
+        skills: "Integer sign rules, unlike fractions, squares/roots up to 20, laws of exponents.",
+        questions: [
+          { id: "n1", prompt: "Evaluate: -7 - (-4) + (-2)", options: ["-5", "-13", "-1", "5"], correct: 0, exp: "Subtracting a negative adds it: -7 + 4 - 2 = -5." },
+          { id: "n2", prompt: "Simplify: (2³ × 2⁻⁵) ÷ 2⁻⁴", options: ["2² (4)", "2⁻⁶", "2⁶ (64)", "2⁻²"], correct: 0, exp: "Numerator: 3 + (-5) = -2. Divide: -2 - (-4) = 2 → 2² = 4." }
+        ]
+      },
+      {
+        id: "algebra",
+        name: "Core Algebra",
+        chapters: "Ch 2, Ch 4, Ch 13",
+        skills: "Opening negative brackets, 1-variable equations, basic identities (a±b)² and a²-b².",
+        questions: [
+          { id: "a1", prompt: "Expand and simplify: 5x - 2(3x - 4)", options: ["-x + 8", "-x - 8", "11x - 8", "-x - 4"], correct: 0, exp: "Distribute -2 across both terms: 5x - 6x + 8 = -x + 8." },
+          { id: "a2", prompt: "Factorise: 49x² - 16", options: ["(7x - 4)(7x + 4)", "(7x - 4)²", "(49x - 16)(x + 1)", "(7x + 4)²"], correct: 0, exp: "Difference of squares: a² - b² = (a - b)(a + b)." }
+        ]
+      },
+      {
+        id: "geometry",
+        name: "Essential Geometry",
+        chapters: "Ch 1, Ch 5, Ch 9, Ch 12",
+        skills: "Parallel lines & transversals, triangle angle sum, Pythagoras Theorem, congruence.",
+        questions: [
+          { id: "g1", prompt: "A right triangle has legs 6 cm and 8 cm. What is its hypotenuse?", options: ["10 cm", "14 cm", "12 cm", "100 cm"], correct: 0, exp: "√(6² + 8²) = √(36 + 64) = √100 = 10 cm." },
+          { id: "g2", prompt: "Two parallel lines are cut by a transversal. One co-interior angle is 65°. The other is:", options: ["115°", "65°", "25°", "90°"], correct: 0, exp: "Co-interior angles are supplementary: 180° - 65° = 115°." }
+        ]
+      },
+      {
+        id: "mensuration",
+        name: "Mensuration & Units",
+        chapters: "Ch 6, Ch 14",
+        skills: "2D area formulas, circle circumference/area, squared & cubed unit conversions.",
+        questions: [
+          { id: "m1", prompt: "How many cm² are in 1 m²?", options: ["10,000 cm²", "100 cm²", "1,000 cm²", "1,000,000 cm²"], correct: 0, exp: "1 m = 100 cm, so 1 m² = 100 × 100 = 10,000 cm²." },
+          { id: "m2", prompt: "Area of a triangle with base 12 cm and height 7 cm:", options: ["42 cm²", "84 cm²", "19 cm²", "38 cm²"], correct: 0, exp: "Area = ½ × base × height = ½ × 12 × 7 = 42 cm²." }
+        ]
+      },
+      {
+        id: "data",
+        name: "Data, Ratios & Divisibility",
+        chapters: "Ch 7, Ch 10, Ch 11",
+        skills: "Arithmetic mean, fractions/ratios/percentages, HCF/LCM, prime factorisation.",
+        questions: [
+          { id: "d1", prompt: "The mean of 5 numbers is 14. What is their sum?", options: ["70", "19", "2.8", "65"], correct: 0, exp: "Sum = Mean × Count = 14 × 5 = 70." },
+          { id: "d2", prompt: "What is the HCF (GCD) of 36 and 48?", options: ["12", "6", "144", "24"], correct: 0, exp: "36 = 2² × 3² and 48 = 2⁴ × 3, so HCF = 2² × 3 = 12." }
+        ]
+      }
+    ];
+
+    const TEACH_MONTHS = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"];
+    const FEE_MONTHS = ["Apr 2027", "May 2027", "Jun 2027", "Jul 2027", "Aug 2027", "Sep 2027", "Oct 2027", "Nov 2027", "Dec 2027", "Jan 2028", "Feb 2028", "Mar 2028"];
+
+    function createDefaultState() {
+      const chapters = {};
+      CHAPTER_META.forEach(c => {
+        chapters[c.id] = {
+          steps: [false, false, false, false, false],
+          confidence: "none", // none, red, yellow, green
+          teachMonth: c.teachMonth,
+          teachStatus: "Not Started", // Not Started, In Progress, Taught, Revised
+          tags: [] // { id, qRef, level: 'red'|'yellow', hint, resolved: false }
+        };
+      });
+
+      const fees = {};
+      FEE_MONTHS.forEach(m => { fees[m] = { s1: false, s2: false }; });
+
+      return {
+        launch: LAUNCH_CHECKLIST.map(() => false),
+        chapters,
+        weeklyRhythm: [false, false, false], // Sunday Prep, Class 1, Class 2
+        students: {
+          s1: { name: "Student 1", school: "CBSE Class 9", notes: "" },
+          s2: { name: "Student 2", school: "CBSE Class 9", notes: "" }
+        },
+        diagnostic: { s1: {}, s2: {} },
+        tests: [], // { id, name, date, chapter, max, s1, s2 }
+        attendance: [], // { id, date, slot: 'Class 1'|'Class 2', chapter, s1Att, s1Hw, s2Att, s2Hw }
+        parkingLot: [], // { id, chapter, question, resolved }
+        logistics: {
+          daysPerWeek: "2 days/week (e.g., Tue & Fri)",
+          duration: "1.5 hours per class",
+          mode: "Offline / Home Tuition",
+          feePerStudent: 1500,
+          dueDate: "5th of every month",
+          startMonth: "April 2027"
+        },
+        fees
+      };
+    }
+
+    let state = loadState();
+    let ui = {
+      activeTab: "dashboard",
+      prepFilter: "All",
+      prepSubView: "chapters", // chapters | redqueue
+      openDrawers: {},
+      diagStudent: "s1",
+      classroomChapter: 1,
+      classMode: "class1" // class1 | class2
+    };
+
+    // Timers (in-memory)
+    let ritualTimer = { seconds: 20 * 60, running: false, interval: null };
+    let classPhases = {
+      class1: [
+        { name: "Concept + 1 Worked Example", mins: 20 },
+        { name: "Guided Student Solving (Pen in Their Hands)", mins: 60 },
+        { name: "Homework Assignment (6–8 Qs) & Wrap-Up", mins: 10 }
+      ],
+      class2: [
+        { name: "Homework Check & Doubt Clearing", mins: 15 },
+        { name: "New Concept / Guided Practice", mins: 45 },
+        { name: "Weekly 15-Mark Mini-Test", mins: 25 },
+        { name: "Quick Review & Next-Week Plan", mins: 5 }
+      ]
+    };
+    let liveTimer = { phaseIdx: 0, seconds: 20 * 60, running: false, interval: null };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return createDefaultState();
+        const parsed = JSON.parse(raw);
+        return Object.assign(createDefaultState(), parsed);
+      } catch (e) {
+        return createDefaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const badge = document.getElementById("saveStatus");
+      if (badge) {
+        badge.textContent = "Saved " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+    }
+
+    function switchTab(tab) {
+      ui.activeTab = tab;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+      document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + tab));
+      renderCurrentTab();
+    }
+
+    document.getElementById("tabNav").addEventListener("click", e => {
+      if (e.target.matches(".tab-btn")) switchTab(e.target.dataset.tab);
+    });
+
+    function getStats() {
+      let totalSteps = CHAPTER_META.length * PREP_STEPS.length;
+      let doneSteps = 0;
+      let readyChapters = 0;
+      let unresolvedReds = 0;
+      let taughtChapters = 0;
+
+      CHAPTER_META.forEach(c => {
+        const ch = state.chapters[c.id];
+        doneSteps += ch.steps.filter(Boolean).length;
+        if (ch.confidence === "green") readyChapters++;
+        if (ch.teachStatus === "Taught" || ch.teachStatus === "Revised") taughtChapters++;
+        unresolvedReds += ch.tags.filter(t => t.level === "red" && !t.resolved).length;
+      });
+
+      let avgScore = null;
+      if (state.tests.length > 0) {
+        let pctSum = 0, count = 0;
+        state.tests.forEach(t => {
+          if (t.max > 0) {
+            if (t.s1 !== "" && t.s1 !== null) { pctSum += (Number(t.s1) / Number(t.max)) * 100; count++; }
+            if (t.s2 !== "" && t.s2 !== null) { pctSum += (Number(t.s2) / Number(t.max)) * 100; count++; }
+          }
+        });
+        if (count > 0) avgScore = Math.round(pctSum / count);
+      }
+
+      let paidSlots = 0;
+      FEE_MONTHS.forEach(m => {
+        if (state.fees[m]?.s1) paidSlots++;
+        if (state.fees[m]?.s2) paidSlots++;
+      });
+      const totalCollected = paidSlots * (Number(state.logistics.feePerStudent) || 0);
+
+      return {
+        prepPct: Math.round((doneSteps / totalSteps) * 100),
+        doneSteps, totalSteps, readyChapters, unresolvedReds, taughtChapters, avgScore, paidSlots, totalCollected
+      };
+    }
+
+    function getStudentPillarStatus(studentKey, pillarId) {
+      const pillar = PILLARS.find(p => p.id === pillarId);
+      const ans = state.diagnostic[studentKey] || {};
+      let answered = 0, correct = 0;
+      pillar.questions.forEach(q => {
+        if (ans[q.id] !== undefined) {
+          answered++;
+          if (ans[q.id] === q.correct) correct++;
+        }
+      });
+      if (answered === 0) return { label: "Untested", cls: "badge-gray", gap: false };
+      if (correct === pillar.questions.length) return { label: "Ready", cls: "badge-green", gap: false };
+      return { label: `Gap (${correct}/${pillar.questions.length})`, cls: "badge-red", gap: true };
+    }
+
+    // ---------------- RENDER: DASHBOARD ----------------
+    function renderDashboard() {
+      const s = getStats();
+      const el = document.getElementById("view-dashboard");
+      el.innerHTML = `
+        <div class="grid grid-5">
+          <div class="card">
+            <div class="kpi-label">Self-Prep Progress</div>
+            <div class="kpi-value">${s.prepPct}%</div>
+            <div class="kpi-note">${s.doneSteps}/${s.totalSteps} tasks • ${s.readyChapters}/14 Green</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${s.prepPct}%"></div></div>
+          </div>
+          <div class="card">
+            <div class="kpi-label">Unresolved Red-Tags</div>
+            <div class="kpi-value" style="color:${s.unresolvedReds > 0 ? 'var(--red)' : 'var(--green)'}">${s.unresolvedReds}</div>
+            <div class="kpi-note">Re-solve blind in late March</div>
+          </div>
+          <div class="card">
+            <div class="kpi-label">Syllabus Taught</div>
+            <div class="kpi-value">${s.taughtChapters} / 14</div>
+            <div class="kpi-note">Target finish: Dec 31</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${Math.round((s.taughtChapters/14)*100)}%; background:var(--green)"></div></div>
+          </div>
+          <div class="card">
+            <div class="kpi-label">Avg Student Score</div>
+            <div class="kpi-value">${s.avgScore === null ? "—" : s.avgScore + "%"}</div>
+            <div class="kpi-note">${state.tests.length} test(s) logged</div>
+          </div>
+          <div class="card">
+            <div class="kpi-label">Fees Collected</div>
+            <div class="kpi-value">₹${s.totalCollected.toLocaleString("en-IN")}</div>
+            <div class="kpi-note">${s.paidSlots} / ${FEE_MONTHS.length * 2} student-months</div>
           </div>
         </div>
 
-        <!-- Global Backup & Reset Actions -->
-        <div class="flex items-center gap-2 shrink-0">
-          <button
-            id="btn-export-json"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:text-indigo-700 hover:border-indigo-300 transition-colors cursor-pointer"
-            title="Export all data as JSON backup"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            <span class="hidden sm:inline">Export JSON</span>
-          </button>
+        <div class="grid grid-2 mt-16">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Dec – March Launch Checklist</div>
+                <div class="card-sub">Lock in your prep and logistics before April Day 1</div>
+              </div>
+              <span class="badge badge-blue">${state.launch.filter(Boolean).length}/${LAUNCH_CHECKLIST.length} Done</span>
+            </div>
+            <div>
+              ${LAUNCH_CHECKLIST.map((item, i) => `
+                <label class="check-row ${state.launch[i] ? 'done' : ''}">
+                  <input type="checkbox" ${state.launch[i] ? 'checked' : ''} onchange="toggleLaunch(${i})" />
+                  <span>${escapeHtml(item)}</span>
+                </label>
+              `).join("")}
+            </div>
+          </div>
 
-          <button
-            id="btn-import-json"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:text-emerald-700 hover:border-emerald-300 transition-colors cursor-pointer"
-            title="Import JSON backup"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            <span class="hidden sm:inline">Import JSON</span>
-          </button>
-          <input id="input-import-file" type="file" accept="application/json,.json" class="hidden" />
-
-          <button
-            id="btn-open-reset-modal"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors cursor-pointer"
-            title="Reset all Tutor OS data"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            <span class="hidden md:inline">Reset</span>
-          </button>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Quick Actions & 2-Day Rhythm</div>
+                <div class="card-sub">Jump straight into your workflow</div>
+              </div>
+            </div>
+            <div class="flex-row mb-12">
+              <button class="btn btn-primary" onclick="switchTab('prep')">Open My Prep</button>
+              <button class="btn" onclick="ui.prepSubView='redqueue'; switchTab('prep')">Red-Tag Queue (${s.unresolvedReds})</button>
+              <button class="btn" onclick="switchTab('classroom')">Launch Class Room</button>
+              <button class="btn" onclick="switchTab('diagnostic')">Day 1 Diagnostic</button>
+            </div>
+            <div class="watch-box">
+              <strong>Your 2 Days/Week Teaching Loop:</strong><br/>
+              • <strong>Sunday:</strong> 1.5–2 hrs self-prep (review Yellow/Red opening steps).<br/>
+              • <strong>Class 1:</strong> 20m Concept + 60m Guided Solving + 10m Homework (6–8 Qs).<br/>
+              • <strong>Class 2:</strong> 15m Homework Check + 45m Guided Practice + 25m 15-Mark Mini-Test.
+            </div>
+            <div class="card-sub mt-12">
+              Active Students: <strong>${escapeHtml(state.students.s1.name)}</strong> &amp; <strong>${escapeHtml(state.students.s2.name)}</strong> • Schedule: <strong>${escapeHtml(state.logistics.daysPerWeek)}</strong>
+            </div>
+          </div>
         </div>
-      </div>
+      `;
+    }
 
-      <!-- Mobile Horizontal Quick-Nav Bar (extra convenience on phones) -->
-      <div id="mobile-quick-tabs" class="lg:hidden flex items-center gap-1 px-3 pb-2.5 overflow-x-auto border-t border-slate-100 pt-2">
-        <!-- Populated by JS -->
-      </div>
-    </header>
+    function toggleLaunch(idx) {
+      state.launch[idx] = !state.launch[idx];
+      saveState();
+      renderDashboard();
+    }
 
-    <!-- Main Dynamic Content Area -->
-    <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl w-full mx-auto space-y-6">
-      <!-- Active Tab Section renders here -->
-    </main>
+    // ---------------- RENDER: MY PREP ----------------
+    function renderPrep() {
+      const el = document.getElementById("view-prep");
+      const redItems = [];
+      CHAPTER_META.forEach(c => {
+        state.chapters[c.id].tags.forEach(t => {
+          if (t.level === "red" && !t.resolved) redItems.push({ ch: c, tag: t });
+        });
+      });
 
-  </div>
+      const filters = ["All", "Dec", "Jan", "Feb", "Mar", "Exemplar"];
+      let filtered = CHAPTER_META.filter(c => {
+        if (ui.prepFilter === "All") return true;
+        if (ui.prepFilter === "Exemplar") return c.exemplar;
+        return c.prepMonth === ui.prepFilter;
+      });
 
-  <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
-  <div id="confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
-      <div class="flex items-start gap-3">
-        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
+      el.innerHTML = `
+        <div class="space-between mb-12">
+          <div class="pill-bar" style="margin-bottom:0">
+            <button class="pill ${ui.prepSubView === 'chapters' ? 'active' : ''}" onclick="ui.prepSubView='chapters'; renderPrep()">All 14 Chapters</button>
+            <button class="pill ${ui.prepSubView === 'redqueue' ? 'active' : ''}" onclick="ui.prepSubView='redqueue'; renderPrep()">Red-Tag Blind Re-Solve Queue (${redItems.length})</button>
+          </div>
+          ${ui.prepSubView === "chapters" ? `
+            <div class="pill-bar" style="margin-bottom:0">
+              ${filters.map(f => `<button class="pill ${ui.prepFilter === f ? 'active' : ''}" onclick="ui.prepFilter='${f}'; renderPrep()">${f}</button>`).join("")}
+            </div>
+          ` : ""}
         </div>
-        <div>
-          <h3 id="confirm-modal-title" class="text-base font-bold text-slate-900">Confirm Action</h3>
-          <p id="confirm-modal-body" class="text-sm text-slate-500 mt-1">Are you sure?</p>
+
+        ${ui.prepSubView === "redqueue" ? renderRedQueueHtml(redItems) : filtered.map(c => renderChapterCardHtml(c)).join("")}
+      `;
+    }
+
+    function renderRedQueueHtml(redItems) {
+      if (redItems.length === 0) {
+        return `<div class="card empty-state">No unresolved Red-Tag questions yet. As you solve chapters in your Master Notebook, log tricky questions as Red to build your late-March blind re-solve queue.</div>`;
+      }
+      return `
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Late-March Blind Re-Solve Queue</div>
+              <div class="card-sub">Close your Master Notebook, solve each question cold on rough paper, then mark it Green.</div>
+            </div>
+          </div>
+          ${redItems.map(({ ch, tag }) => `
+            <div class="phase-chip" style="background:var(--red-soft); border-color:#fecaca;">
+              <div>
+                <span class="badge badge-red">Ch ${ch.id}</span>
+                <strong>${escapeHtml(tag.qRef)}</strong>
+                <div class="card-sub">Opening-step hint: ${escapeHtml(tag.hint || "None logged")}</div>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="resolveTag(${ch.id}, '${tag.id}')">Mark Green ✓</button>
+            </div>
+          `).join("")}
         </div>
-      </div>
-      <div class="flex items-center justify-end gap-2.5 pt-2">
-        <button id="btn-modal-cancel" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
-          Cancel
-        </button>
-        <button id="btn-modal-confirm" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 transition-colors cursor-pointer">
-          Confirm
-        </button>
-      </div>
-    </div>
-  </div>
+      `;
+    }
 
-  <!-- ==================== TOAST CONTAINER ==================== -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+    function renderChapterCardHtml(c) {
+      const ch = state.chapters[c.id];
+      const doneCount = ch.steps.filter(Boolean).length;
+      const confMap = {
+        none: { label: "Not Started", cls: "badge-gray" },
+        red: { label: "Shaky (Red)", cls: "badge-red" },
+        yellow: { label: "Okay (Yellow)", cls: "badge-yellow" },
+        green: { label: "Ready (Green)", cls: "badge-green" }
+      };
+      const conf = confMap[ch.confidence] || confMap.none;
+      const drawerOpen = !!ui.openDrawers[c.id];
 
-  <!-- ==================== APPLICATION SCRIPT ==================== -->
-  <script>
-    (function () {
-      'use strict';
+      return `
+        <div class="chapter-card">
+          <div class="chapter-top">
+            <div>
+              <div class="flex-row">
+                <span class="badge badge-blue">${c.part} • Ch ${c.id}</span>
+                <span class="badge badge-gray">Prep: ${c.prepMonth}</span>
+                ${c.exemplar ? '<span class="badge badge-purple">Exemplar Priority</span>' : ''}
+                <span class="badge ${conf.cls}">${conf.label}</span>
+              </div>
+              <div class="card-title mt-12" style="margin-top:6px;">${escapeHtml(c.title)}</div>
+            </div>
+            <div class="flex-row">
+              <select style="width:auto;" onchange="setConfidence(${c.id}, this.value)">
+                <option value="none" ${ch.confidence === 'none' ? 'selected' : ''}>Confidence: Not Started</option>
+                <option value="red" ${ch.confidence === 'red' ? 'selected' : ''}>Shaky (Red)</option>
+                <option value="yellow" ${ch.confidence === 'yellow' ? 'selected' : ''}>Okay (Yellow)</option>
+                <option value="green" ${ch.confidence === 'green' ? 'selected' : ''}>Ready (Green)</option>
+              </select>
+              <button class="btn btn-sm" onclick="toggleDrawer(${c.id})">
+                Yellow/Red Log (${ch.tags.filter(t => !t.resolved).length}) ${drawerOpen ? "▲" : "▼"}
+              </button>
+            </div>
+          </div>
 
-      /* ====================================================================
-       * 1. STATIC CURRICULUM, DIAGNOSTIC & REFERENCE DATA
-       * ==================================================================== */
-      const STORAGE_KEY = 'ganita_manjari_tutor_os_v1';
+          <div class="watch-box"><strong>Watch Out For:</strong> ${escapeHtml(c.watch)}</div>
 
-      const NAV_ITEMS = [
-        { id: 'dashboard', label: 'Dashboard', short: 'Home', subtitle: 'Command center for self-prep, syllabus pacing & student progress' },
-        { id: 'prep', label: 'My Prep', short: 'My Prep', subtitle: 'Dec–Mar Master Notebook tracker & Red-Tag Blind Re-Solve Queue' },
-        { id: 'calendar', label: 'Year Calendar', short: 'Calendar', subtitle: 'April–February teaching plan, School-Sync & Weekly Operating Rhythm' },
-        { id: 'diagnostic', label: 'Basics & Diagnostic', short: 'Diagnostic', subtitle: 'Class 6–8 prerequisite pillars & interactive Day 1 Diagnostic Runner' },
-        { id: 'students', label: 'Students & Scores', short: 'Students', subtitle: 'Two-student profiles, score trend chart, test log & attendance tracker' },
-        { id: 'classroom', label: 'Class Room', short: 'Class Room', subtitle: '20-min Pre-Class Ritual, 90-min Live Pacing Timer & Doubt Parking Lot' },
-        { id: 'logistics', label: 'Logistics & Fees', short: 'Fees', subtitle: 'Tuition agreement details & 12-month fee collection tracker (Apr 2027 – Mar 2028)' }
+          <div class="grid grid-2" style="gap:4px;">
+            ${PREP_STEPS.map((step, i) => `
+              <label class="check-row ${ch.steps[i] ? 'done' : ''}">
+                <input type="checkbox" ${ch.steps[i] ? 'checked' : ''} onchange="togglePrepStep(${c.id}, ${i})" />
+                <span style="font-size:13px;">${escapeHtml(step)}</span>
+              </label>
+            `).join("")}
+          </div>
+
+          <div class="progress-bar"><div class="progress-fill" style="width:${Math.round((doneCount/5)*100)}%"></div></div>
+
+          ${drawerOpen ? `
+            <div class="drawer">
+              <div class="card-title" style="font-size:13.5px; margin-bottom:8px;">Yellow / Red Question Log & Opening-Step Hints</div>
+              <div class="grid grid-3" style="gap:8px; margin-bottom:10px;">
+                <input type="text" id="tagRef-${c.id}" placeholder="e.g., Ex 4.2 Q5 / Example 3" />
+                <select id="tagLevel-${c.id}">
+                  <option value="red">Red (Got Stuck)</option>
+                  <option value="yellow">Yellow (Tricky Step)</option>
+                </select>
+                <input type="text" id="tagHint-${c.id}" placeholder="Opening-step hint (Line 1 move)" />
+              </div>
+              <button class="btn btn-sm btn-primary mb-12" onclick="addTag(${c.id})">+ Add Question</button>
+
+              ${ch.tags.length === 0 ? `<div class="card-sub">No questions logged for this chapter yet.</div>` : ch.tags.map(t => `
+                <div class="phase-chip" style="background:${t.resolved ? 'var(--green-soft)' : (t.level === 'red' ? 'var(--red-soft)' : 'var(--yellow-soft)')};">
+                  <div>
+                    <span class="badge ${t.resolved ? 'badge-green' : (t.level === 'red' ? 'badge-red' : 'badge-yellow')}">${t.resolved ? 'GREEN' : t.level.toUpperCase()}</span>
+                    <strong>${escapeHtml(t.qRef)}</strong> — <span class="card-sub">${escapeHtml(t.hint || "No hint")}</span>
+                  </div>
+                  <div class="flex-row">
+                    ${!t.resolved ? `<button class="btn btn-sm" onclick="resolveTag(${c.id}, '${t.id}')">Mark Green</button>` : ''}
+                    <button class="btn btn-sm btn-danger" onclick="deleteTag(${c.id}, '${t.id}')">×</button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }
+
+    function togglePrepStep(chId, idx) {
+      state.chapters[chId].steps[idx] = !state.chapters[chId].steps[idx];
+      saveState();
+      renderPrep();
+    }
+    function setConfidence(chId, val) {
+      state.chapters[chId].confidence = val;
+      saveState();
+      renderPrep();
+    }
+    function toggleDrawer(chId) {
+      ui.openDrawers[chId] = !ui.openDrawers[chId];
+      renderPrep();
+    }
+    function addTag(chId) {
+      const qRef = document.getElementById(`tagRef-${chId}`).value.trim();
+      const level = document.getElementById(`tagLevel-${chId}`).value;
+      const hint = document.getElementById(`tagHint-${chId}`).value.trim();
+      if (!qRef) return alert("Enter a question reference first (e.g., Ex 5.2 Q4).");
+      state.chapters[chId].tags.push({ id: "t_" + Date.now(), qRef, level, hint, resolved: false });
+      saveState();
+      renderPrep();
+    }
+    function resolveTag(chId, tagId) {
+      const t = state.chapters[chId].tags.find(x => x.id === tagId);
+      if (t) t.resolved = true;
+      saveState();
+      renderPrep();
+    }
+    function deleteTag(chId, tagId) {
+      state.chapters[chId].tags = state.chapters[chId].tags.filter(x => x.id !== tagId);
+      saveState();
+      renderPrep();
+    }
+
+    // ---------------- RENDER: YEAR CALENDAR ----------------
+    function renderCalendar() {
+      const el = document.getElementById("view-calendar");
+      const rhythmItems = [
+        "Sunday Tutor Prep (1.5–2 hrs): Pre-solve week's NCERT questions & Yellow/Red opening steps",
+        "Class 1 (90 min): 20m Concept + 60m Guided Solving + 10m Homework (6–8 targeted Qs)",
+        "Class 2 (90 min): 15m Homework Check + 45m Guided Practice + 25m 15-Mark Weekly Mini-Test"
       ];
 
-      const PREP_STEPS = [
-        'Solved In-Text Problems',
-        'Solved End Exercises',
-        'Practiced CBSE Proof Format',
-        'Noted Common Traps',
-        'Exemplar / Extra Qs'
-      ];
+      el.innerHTML = `
+        <div class="card mb-12">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Weekly Operating Rhythm (2 Days / Week)</div>
+              <div class="card-sub">Check off each step every week, then reset on Sunday</div>
+            </div>
+            <button class="btn btn-sm" onclick="resetWeeklyRhythm()">Reset Week</button>
+          </div>
+          ${rhythmItems.map((txt, i) => `
+            <label class="check-row ${state.weeklyRhythm[i] ? 'done' : ''}">
+              <input type="checkbox" ${state.weeklyRhythm[i] ? 'checked' : ''} onchange="toggleRhythm(${i})" />
+              <span>${escapeHtml(txt)}</span>
+            </label>
+          `).join("")}
+        </div>
 
-      const LAUNCH_MILESTONES = [
-        'Agree monthly fee, days, timing & location with parents',
-        'Download Ganita Manjari Part I & Part II official NCERT PDFs',
-        'Complete Master Notebook by hand for all 14 chapters (Dec–Mar)',
-        'Blind re-solve all Red-Tag questions on rough paper in late March',
-        'Re-confirm April start date & notebooks with parents in late Feb/Mar',
-        'Run Day 1 Diagnostic Quiz on both students to map Class 6–8 gaps'
-      ];
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">April – February Teaching Roadmap (School-Sync Enabled)</div>
+              <div class="card-sub">Reassign any chapter's month if school teaches it earlier. Target: finish all 14 chapters by Dec 31; Jan–Feb strictly for revision & mocks.</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ch</th>
+                  <th>Chapter Title</th>
+                  <th>Target Month (School-Sync)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${CHAPTER_META.map(c => {
+                  const ch = state.chapters[c.id];
+                  return `
+                    <tr>
+                      <td><strong>Ch ${c.id}</strong></td>
+                      <td>${escapeHtml(c.title)} ${c.exemplar ? '<span class="badge badge-purple">Exemplar</span>' : ''}</td>
+                      <td>
+                        <select style="width:auto;" onchange="setTeachMonth(${c.id}, this.value)">
+                          ${TEACH_MONTHS.map(m => `<option value="${m}" ${ch.teachMonth === m ? 'selected' : ''}>${m}</option>`).join("")}
+                        </select>
+                      </td>
+                      <td>
+                        <select style="width:auto;" onchange="setTeachStatus(${c.id}, this.value)">
+                          ${["Not Started", "In Progress", "Taught", "Revised"].map(st => `<option value="${st}" ${ch.teachStatus === st ? 'selected' : ''}>${st}</option>`).join("")}
+                        </select>
+                      </td>
+                    </tr>
+                  `;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+          <div class="watch-box mt-12">
+            <strong>Milestones:</strong> <strong>September</strong> = Half-Yearly Revision + two 80-mark step-marked mocks • <strong>Dec 31</strong> = Full Syllabus Finish • <strong>Jan–Feb</strong> = Two Revision Rounds + 3–4 timed 80-mark papers.
+          </div>
+        </div>
+      `;
+    }
 
-      const WEEKLY_RHYTHM_ITEMS = [
-        { label: 'Sunday 2-Hr Prep', desc: 'Pre-solve weekly NCERT examples & flag Yellow/Red traps' },
-        { label: 'Class 1 (Teach + Guided Solving)', desc: '20m concept + 55m pen-in-their-hands + 6–8 HW' },
-        { label: 'Class 2 (Teach + Guided Solving)', desc: 'Clear HW doubts, new concept + live guided practice' },
-        { label: 'Class 3 (HW Check + 15-Mark Mini-Test)', desc: 'Check HW + 25m timed weekly mini-test on paper' }
-      ];
+    function toggleRhythm(i) {
+      state.weeklyRhythm[i] = !state.weeklyRhythm[i];
+      saveState();
+      renderCalendar();
+    }
+    function resetWeeklyRhythm() {
+      state.weeklyRhythm = [false, false, false];
+      saveState();
+      renderCalendar();
+    }
+    function setTeachMonth(chId, m) {
+      state.chapters[chId].teachMonth = m;
+      saveState();
+    }
+    function setTeachStatus(chId, st) {
+      state.chapters[chId].teachStatus = st;
+      saveState();
+    }
 
-      const TEACHING_MONTHS = [
-        { key: 'April', label: 'April 2027', tag: 'Session Kickoff', note: 'Build early confidence with Coordinates & Number System before graphing Linear Polynomials.' },
-        { key: 'May', label: 'May 2027', tag: 'Summer Break', note: 'School homework is light—drill algebraic identities & factorisation until muscle memory.' },
-        { key: 'June', label: 'June 2027', tag: 'Proofs Begin', note: 'Enforce strict CBSE format (Given → To Prove → Proof with theorem in brackets).' },
-        { key: 'July', label: 'July 2027', tag: 'Unit Test 1', note: 'Reserve 1 week for UT-1 doubt clearing. Do not rush Quadrilateral proofs.' },
-        { key: 'August', label: 'August 2027', tag: 'High-Scoring Units', note: 'Data & Probability offer a high-scoring calculation break before Half-Yearlies.' },
-        { key: 'September', label: 'September 2027', tag: 'Half-Yearlies', milestone: true, note: 'Term 1 Full Revision & Two 80-Mark Mock Papers graded strictly for step marking.' },
-        { key: 'October', label: 'October 2027', tag: 'Festive Breaks', note: 'Expect 1–2 weeks lost to holidays. Pre-solve AP/GP and Linear Equation word problems.' },
-        { key: 'November', label: 'November 2027', tag: 'Logic & Algorithms', note: 'Trace Euclid’s algorithm step by step and build up speed for December wrap-up.' },
-        { key: 'December', label: 'December 2027', tag: 'Dec 31 Hard Deadline', note: 'Finish Circles proofs cleanly & drill Surface Area/Volume formula + unit accuracy.' },
-        { key: 'January', label: 'January 2028', tag: 'Revision Rounds', milestone: true, note: 'Round 1: Geometry & Algebra Repair • Round 2: Scoring Units + Case Studies & Exemplar.' },
-        { key: 'February', label: 'Feb 2028 – Finals', tag: 'Mock Crunch', milestone: true, note: '3–4 Timed 80-Mark Mock Papers (3 hrs, no phone) + Error-Log & Formula Polish.' }
-      ];
+    // ---------------- RENDER: BASICS & DIAGNOSTIC ----------------
+    function renderDiagnostic() {
+      const el = document.getElementById("view-diagnostic");
+      const sKey = ui.diagStudent;
+      const ans = state.diagnostic[sKey] || {};
 
-      const CHAPTER_MOVE_MONTHS = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      el.innerHTML = `
+        <div class="card mb-12">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Side-by-Side Foundational Gap Map (Class 6–8 Basics)</div>
+              <div class="card-sub">Gaps flagged here automatically show up in the Class Room when you teach dependent chapters.</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prerequisite Pillar</th>
+                  <th>Dependent Chapters</th>
+                  <th>${escapeHtml(state.students.s1.name)}</th>
+                  <th>${escapeHtml(state.students.s2.name)}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${PILLARS.map(p => {
+                  const r1 = getStudentPillarStatus("s1", p.id);
+                  const r2 = getStudentPillarStatus("s2", p.id);
+                  return `
+                    <tr>
+                      <td><strong>${escapeHtml(p.name)}</strong><div class="card-sub">${escapeHtml(p.skills)}</div></td>
+                      <td>${escapeHtml(p.chapters)}</td>
+                      <td><span class="badge ${r1.cls}">${r1.label}</span></td>
+                      <td><span class="badge ${r2.cls}">${r2.label}</span></td>
+                    </tr>
+                  `;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      const FEE_MONTHS = [
-        { key: '2027-04', label: 'Apr 2027' },
-        { key: '2027-05', label: 'May 2027' },
-        { key: '2027-06', label: 'Jun 2027' },
-        { key: '2027-07', label: 'Jul 2027' },
-        { key: '2027-08', label: 'Aug 2027' },
-        { key: '2027-09', label: 'Sep 2027' },
-        { key: '2027-10', label: 'Oct 2027' },
-        { key: '2027-11', label: 'Nov 2027' },
-        { key: '2027-12', label: 'Dec 2027' },
-        { key: '2028-01', label: 'Jan 2028' },
-        { key: '2028-02', label: 'Feb 2028' },
-        { key: '2028-03', label: 'Mar 2028' }
-      ];
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Day 1 Diagnostic Runner (10 Questions)</div>
+              <div class="card-sub">Select a student and record their answers to map their foundational gaps.</div>
+            </div>
+            <div class="flex-row">
+              <button class="pill ${sKey === 's1' ? 'active' : ''}" onclick="ui.diagStudent='s1'; renderDiagnostic()">${escapeHtml(state.students.s1.name)}</button>
+              <button class="pill ${sKey === 's2' ? 'active' : ''}" onclick="ui.diagStudent='s2'; renderDiagnostic()">${escapeHtml(state.students.s2.name)}</button>
+              <button class="btn btn-sm btn-danger" onclick="resetDiagnostic('${sKey}')">Clear ${escapeHtml(state.students[sKey].name)}</button>
+            </div>
+          </div>
 
-      const CHAPTERS_META = [
-        // Part I
-        {
-          id: 1,
-          title: 'Orienting Yourself: The Use of Coordinates',
-          part: 'Part I',
-          prepMonth: 'Dec',
-          defaultTeachMonth: 'April',
-          exemplar: false,
-          pillars: ['geometry', 'numbers'],
-          prereqText: 'Number line with negatives, Pythagoras Theorem (distance formula), quadrant signs.',
-          tip: 'Kids mix up (x, y) order and drop negative signs inside (x₂ − x₁)² when subtracting negatives.'
-        },
-        {
-          id: 2,
-          title: 'Introduction to Linear Polynomials',
-          part: 'Part I',
-          prepMonth: 'Dec',
-          defaultTeachMonth: 'April',
-          exemplar: false,
-          pillars: ['algebra'],
-          prereqText: 'Evaluating algebraic expressions, sign rules, plotting ordered pairs on a grid.',
-          tip: 'Connect algebraic y = ax + b directly to visual slope (steepness) and y-intercept—don’t let it stay abstract.'
-        },
-        {
-          id: 3,
-          title: 'The World of Numbers',
-          part: 'Part I',
-          prepMonth: 'Dec',
-          defaultTeachMonth: 'April',
-          exemplar: false,
-          pillars: ['numbers'],
-          prereqText: 'Fractions & decimals, prime factorisation, squares/square roots, laws of exponents.',
-          tip: 'Drill the exact contradiction proof for irrationality of √2 and √3 step by step; CBSE checks every logical line.'
-        },
-        {
-          id: 4,
-          title: 'Exploring Algebraic Identities',
-          part: 'Part I',
-          prepMonth: 'Dec',
-          defaultTeachMonth: 'May',
-          exemplar: true,
-          pillars: ['algebra'],
-          prereqText: 'Opening negative brackets, distributive law, basic Class 8 identities (a ± b)² and a² − b².',
-          tip: 'Sign traps in cubic identities and careless term cancellation in rational expressions cause 70% of lost marks.'
-        },
-        {
-          id: 5,
-          title: "I'm Up and Down, and Round and Round (Circles)",
-          part: 'Part I',
-          prepMonth: 'Jan',
-          defaultTeachMonth: 'December',
-          exemplar: true,
-          pillars: ['geometry'],
-          prereqText: 'Angle sum of triangles, isosceles triangle property, Pythagoras Theorem, triangle congruence.',
-          tip: 'Always sketch a clean big diagram first. Require exact theorem names in brackets for chords & cyclic quadrilaterals.'
-        },
-        {
-          id: 6,
-          title: 'Measuring Space: Perimeter and Area',
-          part: 'Part I',
-          prepMonth: 'Jan',
-          defaultTeachMonth: 'June',
-          exemplar: false,
-          pillars: ['mensuration', 'numbers'],
-          prereqText: '2D area formulas (triangle, trapezium, circle), square roots by prime factorisation, π calculations.',
-          tip: 'Brahmagupta’s formula is new even to strong students—simplify inside the square root using prime pairs before multiplying!'
-        },
-        {
-          id: 7,
-          title: 'The Mathematics of Maybe: Introduction to Probability',
-          part: 'Part I',
-          prepMonth: 'Jan',
-          defaultTeachMonth: 'August',
-          exemplar: false,
-          pillars: ['data', 'numbers'],
-          prereqText: 'Fractions, ratios, percentages, and listing outcomes systematically.',
-          tip: 'Watch for double-counting in dice/coin sample spaces; teach tree diagrams to make outcomes unmistakable.'
-        },
-        {
-          id: 8,
-          title: 'Predicting What Comes Next: Exploring Sequences',
-          part: 'Part I',
-          prepMonth: 'Jan',
-          defaultTeachMonth: 'October',
-          exemplar: true,
-          pillars: ['numbers', 'algebra'],
-          prereqText: 'Number patterns, powers/exponents, solving 1-variable linear equations.',
-          tip: 'Students confuse n (term number) with aₙ (term value) and mix up AP common difference (d) with GP common ratio (r).'
-        },
-        // Part II
-        {
-          id: 9,
-          title: 'Propositions and their Converses',
-          part: 'Part II',
-          prepMonth: 'Feb',
-          defaultTeachMonth: 'June',
-          exemplar: false,
-          pillars: ['geometry'],
-          prereqText: 'Parallel lines & transversals, triangle congruence basics, if–then logical statements.',
-          tip: 'One single counterexample disproves a universal statement, while examples alone never prove one. Practice both!'
-        },
-        {
-          id: 10,
-          title: 'How Quantities Combine: Understanding Data',
-          part: 'Part II',
-          prepMonth: 'Feb',
-          defaultTeachMonth: 'August',
-          exemplar: false,
-          pillars: ['data'],
-          prere
+          <div class="grid grid-2">
+            ${PILLARS.map(p => `
+              <div class="card" style="background:var(--surface-2); box-shadow:none;">
+                <div class="card-title" style="font-size:14px;">${escapeHtml(p.name)}</div>
+                <div class="card-sub mb-12">Feeds into: ${escapeHtml(p.chapters)}</div>
+                ${p.questions.map((q, qi) => {
+                  const chosen = ans[q.id];
+                  return `
+                    <div class="mb-12">
+                      <div style="font-weight:600; font-size:13px; margin-bottom:6px;">Q${qi + 1}. ${escapeHtml(q.prompt)}</div>
+                      ${q.options.map((opt, oi) => {
+                        let cls = "";
+                        if (chosen !== undefined) {
+                          if (oi === q.correct) cls = "correct";
+                          else if (oi === chosen) cls = "wrong";
+                        }
+                        return `<button class="option-btn ${cls}" onclick="answerDiag('${sKey}', '${q.id}', ${oi})">${escapeHtml(opt)}</button>`;
+                      }).join("")}
+                      ${chosen !== undefined ? `<div class="card-sub" style="margin-top:4px;">💡 ${escapeHtml(q.exp)}</div>` : ""}
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function answerDiag(sKey, qId, optIdx) {
+      state.diagnostic[sKey][qId] = optIdx;
+      saveState();
+      renderDiagnostic();
+    }
+    function resetDiagnostic(sKey) {
+      state.diagnostic[sKey] = {};
+      saveState();
+      renderDiagnostic();
+    }
+
+    // ---------------- RENDER: STUDENTS & SCORES ----------------
+    function renderStudents() {
+      const el = document.getElementById("view-students");
+      el.innerHTML = `
+        <div class="grid grid-2 mb-12">
+          ${["s1", "s2"].map(k => `
+            <div class="card">
+              <div class="card-title mb-12">${k === "s1" ? "Student 1 Profile" : "Student 2 Profile"}</div>
+              <div class="grid" style="gap:10px;">
+                <div>
+                  <label class="field-label">Student Name (updates across all tabs)</label>
+                  <input type="text" value="${escapeHtml(state.students[k].name)}" onchange="updateStudent('${k}', 'name', this.value)" />
+                </div>
+                <div>
+                  <label class="field-label">School / Notes</label>
+                  <input type="text" value="${escapeHtml(state.students[k].notes)}" placeholder="e.g., Strong in algebra, rushes geometry steps" onchange="updateStudent('${k}', 'notes', this.value)" />
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="card mb-12">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Score Trend Chart (%)</div>
+              <div class="card-sub"><span style="color:var(--primary); font-weight:700;">● ${escapeHtml(state.students.s1.name)}</span> &nbsp; <span style="color:var(--purple); font-weight:700;">● ${escapeHtml(state.students.s2.name)}</span></div>
+            </div>
+          </div>
+          ${renderScoreSvg()}
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-title mb-12">Log Weekly Mini-Test / Exam</div>
+            <div class="grid grid-2" style="gap:8px;">
+              <div><label class="field-label">Test Name</label><input type="text" id="tName" placeholder="e.g., Ch 1 Mini-Test" /></div>
+              <div><label class="field-label">Date</label><input type="date" id="tDate" /></div>
+              <div><label class="field-label">Max Marks</label><input type="number" id="tMax" value="15" /></div>
+              <div><label class="field-label">Chapter</label>
+                <select id="tCh">${CHAPTER_META.map(c => `<option value="Ch ${c.id}">Ch ${c.id}: ${escapeHtml(c.title.slice(0, 22))}</option>`).join("")}<option value="Full Mock">Full Syllabus Mock</option></select>
+              </div>
+              <div><label class="field-label">${escapeHtml(state.students.s1.name)} Score</label><input type="number" id="tS1" placeholder="e.g., 13" /></div>
+              <div><label class="field-label">${escapeHtml(state.students.s2.name)} Score</label><input type="number" id="tS2" placeholder="e.g., 11" /></div>
+            </div>
+            <button class="btn btn-primary mt-12" onclick="addTest()">+ Log Test Score</button>
+
+            <div class="table-wrap mt-16">
+              <table>
+                <thead><tr><th>Test</th><th>${escapeHtml(state.students.s1.name)}</th><th>${escapeHtml(state.students.s2.name)}</th><th></th></tr></thead>
+                <tbody>
+                  ${state.tests.length === 0 ? `<tr><td colspan="4" class="empty-state">No tests logged yet.</td></tr>` : state.tests.slice().reverse().map(t => `
+                    <tr>
+                      <td><strong>${escapeHtml(t.name)}</strong><div class="card-sub">${escapeHtml(t.date || "")} • ${escapeHtml(t.chapter)}</div></td>
+                      <td>${t.s1}/${t.max} (${Math.round((t.s1/t.max)*100)}%)</td>
+                      <td>${t.s2}/${t.max} (${Math.round((t.s2/t.max)*100)}%)</td>
+                      <td><button class="btn btn-sm btn-danger" onclick="deleteTest('${t.id}')">×</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title mb-12">Class Attendance & Homework (2 Days/Week)</div>
+            <div class="grid grid-2" style="gap:8px;">
+              <div><label class="field-label">Date</label><input type="date" id="aDate" /></div>
+              <div><label class="field-label">Weekly Slot</label>
+                <select id="aSlot">
+                  <option value="Class 1 (Teach + Practice)">Class 1 (Teach + Practice)</option>
+                  <option value="Class 2 (Review + Mini-Test)">Class 2 (Review + Mini-Test)</option>
+                </select>
+              </div>
+              <div><label class="field-label">${escapeHtml(state.students.s1.name)}</label>
+                <select id="aS1">
+                  <option value="Present • HW Done">Present • HW Done</option>
+                  <option value="Present • HW Missed">Present • HW Missed</option>
+                  <option value="Absent">Absent</option>
+                </select>
+              </div>
+              <div><label class="field-label">${escapeHtml(state.students.s2.name)}</label>
+                <select id="aS2">
+                  <option value="Present • HW Done">Present • HW Done</option>
+                  <option value="Present • HW Missed">Present • HW Missed</option>
+                  <option value="Absent">Absent</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary mt-12" onclick="addAttendance()">+ Log Class Session</button>
+
+            <div class="table-wrap mt-16">
+              <table>
+                <thead><tr><th>Session</th><th>${escapeHtml(state.students.s1.name)}</th><th>${escapeHtml(state.students.s2.name)}</th><th></th></tr></thead>
+                <tbody>
+                  ${state.attendance.length === 0 ? `<tr><td colspan="4" class="empty-state">No sessions logged yet.</td></tr>` : state.attendance.slice().reverse().map(a => `
+                    <tr>
+                      <td><strong>${escapeHtml(a.date || "Session")}</strong><div class="card-sub">${escapeHtml(a.slot)}</div></td>
+                      <td>${escapeHtml(a.s1)}</td>
+                      <td>${escapeHtml(a.s2)}</td>
+                      <td><button class="btn btn-sm btn-danger" onclick="deleteAttendance('${a.id}')">×</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderScoreSvg() {
+      if (state.tests.length === 0) {
+        return `<div class="empty-state">Log at least one test below to visualize both students' percentage trend over the year.</div>`;
+      }
+      const W = 680, H = 190, padL = 36, padR = 20, padT = 16, padB = 28;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const n = state.tests.length;
+      const xAt = i => n === 1 ? padL + plotW / 2 : padL + (i / (n - 1)) * plotW;
+      const yAt = pct => padT + plotH - (Math.max(0, Math.min(100, pct)) / 100) * plotH;
+
+      const pts1 = state.tests.map((t, i) => `${xAt(i)},${yAt((t.s1 / t.max) * 100)}`).join(" ");
+      const pts2 = state.tests.map((t, i) => `${xAt(i)},${yAt((t.s2 / t.max) * 100)}`).join(" ");
+
+      return `
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; max-height:220px;">
+          ${[0, 25, 50, 75, 100].map(v => `
+            <line x1="${padL}" y1="${yAt(v)}" x2="${W - padR}" y2="${yAt(v)}" stroke="#e2e8f0" stroke-dasharray="3,3" />
+            <text x="6" y="${yAt(v) + 4}" font-size="10" fill="#64748b">${v}%</text>
+          `).join("")}
+          ${n > 1 ? `<polyline fill="none" stroke="#2563eb" stroke-width="2.5" points="${pts1}" />` : ""}
+          ${n > 1 ? `<polyline fill="none" stroke="#7c3aed" stroke-width="2.5" points="${pts2}" />` : ""}
+          ${state.tests.map((t, i) => `
+            <circle cx="${xAt(i)}" cy="${yAt((t.s1 / t.max) * 100)}" r="4.5" fill="#2563eb" />
+            <circle cx="${xAt(i)}" cy="${yAt((t.s2 / t.max) * 100)}" r="4.5" fill="#7c3aed" />
+            <text x="${xAt(i)}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#64748b">${escapeHtml(t.name.slice(0, 10))}</text>
+          `).join("")}
+        </svg>
+      `;
+    }
+
+    function updateStudent(k, field, val) {
+      state.students[k][field] = val.trim() || (k === "s1" ? "Student 1" : "Student 2");
+      saveState();
+      renderStudents();
+    }
+    function addTest() {
+      const name = document.getElementById("tName").value.trim();
+      const date = document.getElementById("tDate").value;
+      const max = Number(document.getElementById("tMax").value);
+      const chapter = document.getElementById("tCh").value;
+      const s1 = Number(document.getElementById("tS1").value);
+      const s2 = Number(document.getElementById("tS2").value);
+      if (!name || !max) return alert("Enter test name and max marks.");
+      state.tests.push({ id: "tst_" + Date.now(), name, date, max, chapter, s1, s2 });
+      saveState();
+      renderStudents();
+    }
+    function deleteTest(id) {
+      state.tests = state.tests.filter(t => t.id !== id);
+      saveState();
+      renderStudents();
+    }
+    function addAttendance() {
+      const date = document.getElementById("aDate").value;
+      const slot = document.getElementById("aSlot").value;
+      const s1 = document.getElementById("aS1").value;
+      const s2 = document.getElementById("aS2").value;
+      state.attendance.push({ id: "att_" + Date.now(), date, slot, s1, s2 });
+      saveState();
+      renderStudents();
+    }
+    function deleteAttendance(id) {
+      state.attendance = state.attendance.filter(a => a.id !== id);
+      saveState();
+      renderStudents();
+    }
+
+    // ---------------- RENDER: CLASS ROOM ----------------
+    function fmtTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    function renderClassroom() {
+      const el = document.getElementById("view-classroom");
+      const chMeta = CHAPTER_META.find(c => c.id === Number(ui.classroomChapter));
+      const chState = state.chapters[chMeta.id];
+      const gaps = [];
+      chMeta.pillars.forEach(pid => {
+        const p = PILLARS.find(x => x.id === pid);
+        const r1 = getStudentPillarStatus("s1", pid);
+        const r2 = getStudentPillarStatus("s2", pid);
+        if (r1.gap || r2.gap) {
+          gaps.push({ pillar: p.name, s1: r1.gap, s2: r2.gap });
+        }
+      });
+
+      const phases = classPhases[ui.classMode];
+
+      el.innerHTML = `
+        <div class="card mb-12">
+          <div class="space-between">
+            <div>
+              <div class="card-title">Today's Teaching Chapter</div>
+              <div class="card-sub">Surfaces prerequisite gaps & your Yellow/Red opening-step hints automatically</div>
+            </div>
+            <select style="width:auto; min-width:280px;" onchange="ui.classroomChapter=Number(this.value); renderClassroom()">
+              ${CHAPTER_META.map(c => `<option value="${c.id}" ${c.id === chMeta.id ? 'selected' : ''}>Ch ${c.id}: ${escapeHtml(c.title)}</option>`).join("")}
+            </select>
+          </div>
+          <div class="grid grid-2 mt-12">
+            <div class="watch-box" style="margin:0;">
+              <strong>Prerequisite Gap Alerts:</strong><br/>
+              ${gaps.length === 0
+                ? "No foundational gaps flagged for this chapter (or run the Day 1 Diagnostic first)."
+                : gaps.map(g => `• <strong>${escapeHtml(g.pillar)}</strong>: ${g.s1 ? escapeHtml(state.students.s1.name) : ''} ${g.s1 && g.s2 ? '& ' : ''}${g.s2 ? escapeHtml(state.students.s2.name) : ''} — do a 10-min warmup first.`).join("<br/>")
+              }
+            </div>
+            <div class="watch-box" style="margin:0; border-left-color:var(--yellow);">
+              <strong>Your Logged Yellow/Red Opening Hints:</strong><br/>
+              ${chState.tags.length === 0
+                ? "No tricky questions logged for this chapter in My Prep yet."
+                : chState.tags.map(t => `• <strong>${escapeHtml(t.qRef)}</strong>: ${escapeHtml(t.hint || "No hint")}`).join("<br/>")
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mb-12">
+          <div class="card">
+            <div class="card-title">20-Min Pre-Class Ritual Timer</div>
+            <div class="card-sub">Evening before class: rehearse Line 1 of every Yellow/Red question</div>
+            <div class="timer-display" id="ritualDisplay">${fmtTime(ritualTimer.seconds)}</div>
+            <div class="flex-row mb-12">
+              <button class="btn btn-primary" onclick="toggleRitualTimer()">${ritualTimer.running ? "Pause" : "Start"}</button>
+              <button class="btn" onclick="resetRitualTimer()">Reset 20:00</button>
+            </div>
+            <div class="card-sub">
+              1. Flip through today's section in Master Notebook.<br/>
+              2. Mentally rehearse the opening move of Yellow/Red questions.<br/>
+              3. Pick 6–8 targeted homework problems before class starts.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="space-between mb-12">
+              <div>
+                <div class="card-title">90-Min Live Class Pacing Timer</div>
+                <div class="card-sub">Tailored to your 2-day weekly schedule</div>
+              </div>
+              <div class="flex-row">
+                <button class="pill ${ui.classMode === 'class1' ? 'active' : ''}" onclick="setClassMode('class1')">Class 1 (Teach)</button>
+                <button class="pill ${ui.classMode === 'class2' ? 'active' : ''}" onclick="setClassMode('class2')">Class 2 (Test Day)</button>
+              </div>
+            </div>
+            <div class="timer-display" id="liveDisplay">${fmtTime(liveTimer.seconds)}</div>
+            <div class="flex-row mb-12">
+              <button class="btn btn-primary" onclick="toggleLiveTimer()">${liveTimer.running ? "Pause" : "Start"}</button>
+              <button class="btn" onclick="prevPhase()">← Prev</button>
+              <button class="btn" onclick="nextPhase()">Next →</button>
+              <button class="btn" onclick="resetLivePhase()">Reset Phase</button>
+            </div>
+            ${phases.map((p, i) => `
+              <div class="phase-chip ${i === liveTimer.phaseIdx ? 'active' : ''}">
+                <span>${i + 1}. ${escapeHtml(p.name)}</span>
+                <span>${p.mins} min</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title mb-12">Parking Lot (Mid-Class Doubt Catcher)</div>
+          <div class="card-sub mb-12">Never bluff if a student asks an unexpected twist question—park it here and start next class with it.</div>
+          <div class="flex-row mb-12">
+            <input type="text" id="parkInput" placeholder="e.g., RD Sharma Ch 5 Q14 — chord bisector proof" style="flex:1; min-width:240px;" />
+            <button class="btn btn-primary" onclick="addParking()">+ Park Doubt</button>
+          </div>
+          ${state.parkingLot.length === 0 ? `<div class="card-sub">Parking lot is clear.</div>` : state.parkingLot.map(p => `
+            <div class="phase-chip" style="background:${p.resolved ? 'var(--green-soft)' : 'var(--surface-2)'}">
+              <span style="${p.resolved ? 'text-decoration:line-through; color:var(--muted)' : ''}">
+                <strong>Ch ${p.chapter}:</strong> ${escapeHtml(p.question)}
+              </span>
+              <div class="flex-row">
+                <button class="btn btn-sm" onclick="toggleParking('${p.id}')">${p.resolved ? "Reopen" : "Cleared ✓"}</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteParking('${p.id}')">×</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function toggleRitualTimer() {
+      if (ritualTimer.running) {
+        clearInterval(ritualTimer.interval);
+        ritualTimer.running = false;
+      } else {
+        ritualTimer.running = true;
+        ritualTimer.interval = setInterval(() => {
+          if (ritualTimer.seconds > 0) {
+            ritualTimer.seconds--;
+            const d = document.getElementById("ritualDisplay");
+            if (d) d.textContent = fmtTime(ritualTimer.seconds);
+          } else {
+            clearInterval(ritualTimer.interval);
+            ritualTimer.running = false;
+          }
+        }, 1000);
+      }
+      renderClassroom();
+    }
+    function resetRitualTimer() {
+      clearInterval(ritualTimer.interval);
+      ritualTimer.running = false;
+      ritualTimer.seconds = 20 * 60;
+      renderClassroom();
+    }
+
+    function setClassMode(mode) {
+      clearInterval(liveTimer.interval);
+      ui.classMode = mode;
+      liveTimer.running = false;
+      liveTimer.phaseIdx = 0;
+      liveTimer.seconds = classPhases[mode][0].mins * 60;
+      renderClassroom();
+    }
+    function toggleLiveTimer() {
+      if (liveTimer.running) {
+        clearInterval(liveTimer.interval);
+        liveTimer.running = false;
+      } else {
+        liveTimer.running = true;
+        liveTimer.interval = setInterval(() => {
+          if (liveTimer.seconds > 0) {
+            liveTimer.seconds--;
+            const d = document.getElementById("liveDisplay");
+            if (d) d.textContent = fmtTime(liveTimer.seconds);
+          } else {
+            clearInterval(liveTimer.interval);
+            liveTimer.running = false;
+          }
+        }, 1000);
+      }
+      renderClassroom();
+    }
+    function prevPhase() {
+      if (liveTimer.phaseIdx > 0) {
+        clearInterval(liveTimer.interval);
+        liveTimer.running = false;
+        liveTimer.phaseIdx--;
+        liveTimer.seconds = classPhases[ui.classMode][liveTimer.phaseIdx].mins * 60;
+        renderClassroom();
+      }
+    }
+    function nextPhase() {
+      const list = classPhases[ui.classMode];
+      if (liveTimer.phaseIdx < list.length - 1) {
+        clearInterval(liveTimer.interval);
+        liveTimer.running = false;
+        liveTimer.phaseIdx++;
+        liveTimer.seconds = list[liveTimer.phaseIdx].mins * 60;
+        renderClassroom();
+      }
+    }
+    function resetLivePhase() {
+      clearInterval(liveTimer.interval);
+      liveTimer.running = false;
+      liveTimer.seconds = classPhases[ui.classMode][liveTimer.phaseIdx].mins * 60;
+      renderClassroom();
+    }
+
+    function addParking() {
+      const q = document.getElementById("parkInput").value.trim();
+      if (!q) return;
+      state.parkingLot.push({ id: "pk_" + Date.now(), chapter: ui.classroomChapter, question: q, resolved: false });
+      saveState();
+      renderClassroom();
+    }
+    function toggleParking(id) {
+      const item = state.parkingLot.find(x => x.id === id);
+      if (item) item.resolved = !item.resolved;
+      saveState();
+      renderClassroom();
+    }
+    function deleteParking(id) {
+      state.parkingLot = state.parkingLot.filter(x => x.id !== id);
+      saveState();
+      renderClassroom();
+    }
+
+    // ---------------- RENDER: LOGISTICS & FEES ----------------
+    function renderLogistics() {
+      const el = document.getElementById("view-logistics");
+      const feeRate = Number(state.logistics.feePerStudent) || 0;
+      const stats = getStats();
+      const totalExpected = FEE_MONTHS.length * 2 * feeRate;
+
+      el.innerHTML = `
+        <div class="card mb-12">
+          <div class="card-title mb-12">Tuition Terms & Schedule</div>
+          <div class="grid grid-3" style="gap:10px;">
+            <div><label class="field-label">Days / Week</label><input type="text" value="${escapeHtml(state.logistics.daysPerWeek)}" onchange="updateLogistics('daysPerWeek', this.value)" /></div>
+            <div><label class="field-label">Class Duration</label><input type="text" value="${escapeHtml(state.logistics.duration)}" onchange="updateLogistics('duration', this.value)" /></div>
+            <div><label class="field-label">Mode / Location</label><input type="text" value="${escapeHtml(state.logistics.mode)}" onchange="updateLogistics('mode', this.value)" /></div>
+            <div><label class="field-label">Monthly Fee per Student (₹)</label><input type="number" value="${feeRate}" onchange="updateLogistics('feePerStudent', Number(this.value))" /></div>
+            <div><label class="field-label">Payment Due Date</label><input type="text" value="${escapeHtml(state.logistics.dueDate)}" onchange="updateLogistics('dueDate', this.value)" /></div>
+            <div><label class="field-label">Session Start</label><input type="text" value="${escapeHtml(state.logistics.startMonth)}" onchange="updateLogistics('startMonth', this.value)" /></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">12-Month Fee Tracker (April 2027 – March 2028)</div>
+              <div class="card-sub">Collected: <strong>₹${stats.totalCollected.toLocaleString("en-IN")}</strong> • Pending: <strong>₹${(totalExpected - stats.totalCollected).toLocaleString("en-IN")}</strong></div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>${escapeHtml(state.students.s1.name)} (₹${feeRate})</th>
+                  <th>${escapeHtml(state.students.s2.name)} (₹${feeRate})</th>
+                  <th>Month Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${FEE_MONTHS.map(m => {
+                  const row = state.fees[m] || { s1: false, s2: false };
+                  const mTotal = (row.s1 ? feeRate : 0) + (row.s2 ? feeRate : 0);
+                  return `
+                    <tr>
+                      <td><strong>${m}</strong></td>
+                      <td><button class="fee-btn ${row.s1 ? 'fee-paid' : 'fee-unpaid'}" onclick="toggleFee('${m}', 's1')">${row.s1 ? 'Paid ✓' : 'Unpaid'}</button></td>
+                      <td><button class="fee-btn ${row.s2 ? 'fee-paid' : 'fee-unpaid'}" onclick="toggleFee('${m}', 's2')">${row.s2 ? 'Paid ✓' : 'Unpaid'}</button></td>
+                      <td><strong>₹${mTotal.toLocaleString("en-IN")}</strong></td>
+                    </tr>
+                  `;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateLogistics(field, val) {
+      state.logistics[field] = val;
+      saveState();
+      renderLogistics();
+    }
+    function toggleFee(month, sKey) {
+      state.fees[month][sKey] = !state.fees[month][sKey];
+      saveState();
+      renderLogistics();
+    }
+
+    // ---------------- BACKUP & RESET ----------------
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ganita-manjari-tutor-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          state = Object.assign(createDefaultState(), parsed);
+          saveState();
+          renderCurrentTab();
+          alert("Backup imported successfully!");
+        } catch (err) {
+          alert("Invalid JSON backup file.");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    }
+
+    function resetAllData() {
+      if (!confirm("Reset all saved progress, scores, and fee records?")) return;
+      state = createDefaultState();
+      saveState();
+      renderCurrentTab();
+    }
+
+    function renderCurrentTab() {
+      if (ui.activeTab === "dashboard") renderDashboard();
+      else if (ui.activeTab === "prep") renderPrep();
+      else if (ui.activeTab === "calendar") renderCalendar();
+      else if (ui.activeTab === "diagnostic") renderDiagnostic();
+      else if (ui.activeTab === "students") renderStudents();
+      else if (ui.activeTab === "classroom") renderClassroom();
+      else if (ui.activeTab === "logistics") renderLogistics();
+    }
+
+    renderCurrentTab();
+  </script>
+</body>
+</html>
