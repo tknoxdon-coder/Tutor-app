@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganita Manjari Tutor OS — Class 9 CBSE Maths</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- ==================== MOBILE SIDEBAR BACKDROP ==================== -->
+  <div id="mobile-drawer-backdrop" class="hidden fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden" aria-hidden="true"></div>
+
+  <!-- ==================== DESKTOP SIDEBAR & MOBILE DRAWER ==================== -->
+  <aside
+    id="app-sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-slate-200 flex flex-col transform -translate-x-full lg:translate-x-0 lg:static lg:shrink-0 transition-transform duration-200 ease-out shadow-xl lg:shadow-none"
+    aria-label="Primary Navigation"
+  >
+    <!-- Brand Block -->
+    <div class="px-5 py-5 border-b border-slate-800 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shrink-0 shadow-sm font-extrabold text-lg">
+          ∑
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm font-bold text-white tracking-tight truncate">Ganita Manjari OS</h1>
+          <p class="text-[11px] text-slate-400 truncate">Class 9 CBSE • 2027–28</p>
+        </div>
+      </div>
+      <button
+        id="btn-close-drawer"
+        type="button"
+        class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+        aria-label="Close menu"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav id="sidebar-nav" class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <!-- Rendered dynamically by JS so badges stay live -->
+    </nav>
+
+    <!-- Live Timer Mini-Pill in Sidebar (visible when any timer runs) -->
+    <div id="sidebar-timer-status" class="hidden mx-3 mb-3 px-3.5 py-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 text-xs flex items-center justify-between cursor-pointer">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="sidebar-timer-label" class="font-medium">Timer Running</span>
+      </div>
+      <span id="sidebar-timer-clock" class="font-mono font-bold text-white">00:00</span>
+    </div>
+
+    <!-- Sidebar Footer Info -->
+    <div class="p-4 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
+      <div class="flex items-center justify-between">
+        <span>NCERT 14-Chapter Edition</span>
+        <span class="inline-flex items-center gap-1 text-emerald-400 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Auto-Saved
+        </span>
+      </div>
+      <p class="text-slate-500">Part I (Ch 1–8) &amp; Part II (Ch 9–14)</p>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN WORKSPACE SHELL ==================== -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+
+    <!-- Sticky Top Header -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-200">
+      <div class="px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
+        <!-- Mobile Menu Button + Page Heading -->
+        <div class="flex items-center gap-3 min-w-0">
+          <button
+            id="btn-open-drawer"
+            type="button"
+            class="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
+            aria-label="Open navigation menu"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div class="min-w-0">
+            <h2 id="header-page-title" class="text-base sm:text-lg font-bold text-slate-900 truncate">Dashboard</h2>
+            <p id="header-page-subtitle" class="text-xs text-slate-500 truncate hidden sm:block">Command center for self-prep, syllabus pacing &amp; student progress</p>
+          </div>
+        </div>
+
+        <!-- Global Backup & Reset Actions -->
+        <div class="flex items-center gap-2 shrink-0">
+          <button
+            id="btn-export-json"
+            type="button"
+            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:text-indigo-700 hover:border-indigo-300 transition-colors cursor-pointer"
+            title="Export all data as JSON backup"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span class="hidden sm:inline">Export JSON</span>
+          </button>
+
+          <button
+            id="btn-import-json"
+            type="button"
+            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:text-emerald-700 hover:border-emerald-300 transition-colors cursor-pointer"
+            title="Import JSON backup"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span class="hidden sm:inline">Import JSON</span>
+          </button>
+          <input id="input-import-file" type="file" accept="application/json,.json" class="hidden" />
+
+          <button
+            id="btn-open-reset-modal"
+            type="button"
+            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors cursor-pointer"
+            title="Reset all Tutor OS data"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span class="hidden md:inline">Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Horizontal Quick-Nav Bar (extra convenience on phones) -->
+      <div id="mobile-quick-tabs" class="lg:hidden flex items-center gap-1 px-3 pb-2.5 overflow-x-auto border-t border-slate-100 pt-2">
+        <!-- Populated by JS -->
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Area -->
+    <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl w-full mx-auto space-y-6">
+      <!-- Active Tab Section renders here -->
+    </main>
+
+  </div>
+
+  <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
+  <div id="confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <h3 id="confirm-modal-title" class="text-base font-bold text-slate-900">Confirm Action</h3>
+          <p id="confirm-modal-body" class="text-sm text-slate-500 mt-1">Are you sure?</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2.5 pt-2">
+        <button id="btn-modal-cancel" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+          Cancel
+        </button>
+        <button id="btn-modal-confirm" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 transition-colors cursor-pointer">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST CONTAINER ==================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+
+  <!-- ==================== APPLICATION SCRIPT ==================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ====================================================================
+       * 1. STATIC CURRICULUM, DIAGNOSTIC & REFERENCE DATA
+       * ==================================================================== */
+      const STORAGE_KEY = 'ganita_manjari_tutor_os_v1';
+
+      const NAV_ITEMS = [
+        { id: 'dashboard', label: 'Dashboard', short: 'Home', subtitle: 'Command center for self-prep, syllabus pacing & student progress' },
+        { id: 'prep', label: 'My Prep', short: 'My Prep', subtitle: 'Dec–Mar Master Notebook tracker & Red-Tag Blind Re-Solve Queue' },
+        { id: 'calendar', label: 'Year Calendar', short: 'Calendar', subtitle: 'April–February teaching plan, School-Sync & Weekly Operating Rhythm' },
+        { id: 'diagnostic', label: 'Basics & Diagnostic', short: 'Diagnostic', subtitle: 'Class 6–8 prerequisite pillars & interactive Day 1 Diagnostic Runner' },
+        { id: 'students', label: 'Students & Scores', short: 'Students', subtitle: 'Two-student profiles, score trend chart, test log & attendance tracker' },
+        { id: 'classroom', label: 'Class Room', short: 'Class Room', subtitle: '20-min Pre-Class Ritual, 90-min Live Pacing Timer & Doubt Parking Lot' },
+        { id: 'logistics', label: 'Logistics & Fees', short: 'Fees', subtitle: 'Tuition agreement details & 12-month fee collection tracker (Apr 2027 – Mar 2028)' }
+      ];
+
+      const PREP_STEPS = [
+        'Solved In-Text Problems',
+        'Solved End Exercises',
+        'Practiced CBSE Proof Format',
+        'Noted Common Traps',
+        'Exemplar / Extra Qs'
+      ];
+
+      const LAUNCH_MILESTONES = [
+        'Agree monthly fee, days, timing & location with parents',
+        'Download Ganita Manjari Part I & Part II official NCERT PDFs',
+        'Complete Master Notebook by hand for all 14 chapters (Dec–Mar)',
+        'Blind re-solve all Red-Tag questions on rough paper in late March',
+        'Re-confirm April start date & notebooks with parents in late Feb/Mar',
+        'Run Day 1 Diagnostic Quiz on both students to map Class 6–8 gaps'
+      ];
+
+      const WEEKLY_RHYTHM_ITEMS = [
+        { label: 'Sunday 2-Hr Prep', desc: 'Pre-solve weekly NCERT examples & flag Yellow/Red traps' },
+        { label: 'Class 1 (Teach + Guided Solving)', desc: '20m concept + 55m pen-in-their-hands + 6–8 HW' },
+        { label: 'Class 2 (Teach + Guided Solving)', desc: 'Clear HW doubts, new concept + live guided practice' },
+        { label: 'Class 3 (HW Check + 15-Mark Mini-Test)', desc: 'Check HW + 25m timed weekly mini-test on paper' }
+      ];
+
+      const TEACHING_MONTHS = [
+        { key: 'April', label: 'April 2027', tag: 'Session Kickoff', note: 'Build early confidence with Coordinates & Number System before graphing Linear Polynomials.' },
+        { key: 'May', label: 'May 2027', tag: 'Summer Break', note: 'School homework is light—drill algebraic identities & factorisation until muscle memory.' },
+        { key: 'June', label: 'June 2027', tag: 'Proofs Begin', note: 'Enforce strict CBSE format (Given → To Prove → Proof with theorem in brackets).' },
+        { key: 'July', label: 'July 2027', tag: 'Unit Test 1', note: 'Reserve 1 week for UT-1 doubt clearing. Do not rush Quadrilateral proofs.' },
+        { key: 'August', label: 'August 2027', tag: 'High-Scoring Units', note: 'Data & Probability offer a high-scoring calculation break before Half-Yearlies.' },
+        { key: 'September', label: 'September 2027', tag: 'Half-Yearlies', milestone: true, note: 'Term 1 Full Revision & Two 80-Mark Mock Papers graded strictly for step marking.' },
+        { key: 'October', label: 'October 2027', tag: 'Festive Breaks', note: 'Expect 1–2 weeks lost to holidays. Pre-solve AP/GP and Linear Equation word problems.' },
+        { key: 'November', label: 'November 2027', tag: 'Logic & Algorithms', note: 'Trace Euclid’s algorithm step by step and build up speed for December wrap-up.' },
+        { key: 'December', label: 'December 2027', tag: 'Dec 31 Hard Deadline', note: 'Finish Circles proofs cleanly & drill Surface Area/Volume formula + unit accuracy.' },
+        { key: 'January', label: 'January 2028', tag: 'Revision Rounds', milestone: true, note: 'Round 1: Geometry & Algebra Repair • Round 2: Scoring Units + Case Studies & Exemplar.' },
+        { key: 'February', label: 'Feb 2028 – Finals', tag: 'Mock Crunch', milestone: true, note: '3–4 Timed 80-Mark Mock Papers (3 hrs, no phone) + Error-Log & Formula Polish.' }
+      ];
+
+      const CHAPTER_MOVE_MONTHS = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      const FEE_MONTHS = [
+        { key: '2027-04', label: 'Apr 2027' },
+        { key: '2027-05', label: 'May 2027' },
+        { key: '2027-06', label: 'Jun 2027' },
+        { key: '2027-07', label: 'Jul 2027' },
+        { key: '2027-08', label: 'Aug 2027' },
+        { key: '2027-09', label: 'Sep 2027' },
+        { key: '2027-10', label: 'Oct 2027' },
+        { key: '2027-11', label: 'Nov 2027' },
+        { key: '2027-12', label: 'Dec 2027' },
+        { key: '2028-01', label: 'Jan 2028' },
+        { key: '2028-02', label: 'Feb 2028' },
+        { key: '2028-03', label: 'Mar 2028' }
+      ];
+
+      const CHAPTERS_META = [
+        // Part I
+        {
+          id: 1,
+          title: 'Orienting Yourself: The Use of Coordinates',
+          part: 'Part I',
+          prepMonth: 'Dec',
+          defaultTeachMonth: 'April',
+          exemplar: false,
+          pillars: ['geometry', 'numbers'],
+          prereqText: 'Number line with negatives, Pythagoras Theorem (distance formula), quadrant signs.',
+          tip: 'Kids mix up (x, y) order and drop negative signs inside (x₂ − x₁)² when subtracting negatives.'
+        },
+        {
+          id: 2,
+          title: 'Introduction to Linear Polynomials',
+          part: 'Part I',
+          prepMonth: 'Dec',
+          defaultTeachMonth: 'April',
+          exemplar: false,
+          pillars: ['algebra'],
+          prereqText: 'Evaluating algebraic expressions, sign rules, plotting ordered pairs on a grid.',
+          tip: 'Connect algebraic y = ax + b directly to visual slope (steepness) and y-intercept—don’t let it stay abstract.'
+        },
+        {
+          id: 3,
+          title: 'The World of Numbers',
+          part: 'Part I',
+          prepMonth: 'Dec',
+          defaultTeachMonth: 'April',
+          exemplar: false,
+          pillars: ['numbers'],
+          prereqText: 'Fractions & decimals, prime factorisation, squares/square roots, laws of exponents.',
+          tip: 'Drill the exact contradiction proof for irrationality of √2 and √3 step by step; CBSE checks every logical line.'
+        },
+        {
+          id: 4,
+          title: 'Exploring Algebraic Identities',
+          part: 'Part I',
+          prepMonth: 'Dec',
+          defaultTeachMonth: 'May',
+          exemplar: true,
+          pillars: ['algebra'],
+          prereqText: 'Opening negative brackets, distributive law, basic Class 8 identities (a ± b)² and a² − b².',
+          tip: 'Sign traps in cubic identities and careless term cancellation in rational expressions cause 70% of lost marks.'
+        },
+        {
+          id: 5,
+          title: "I'm Up and Down, and Round and Round (Circles)",
+          part: 'Part I',
+          prepMonth: 'Jan',
+          defaultTeachMonth: 'December',
+          exemplar: true,
+          pillars: ['geometry'],
+          prereqText: 'Angle sum of triangles, isosceles triangle property, Pythagoras Theorem, triangle congruence.',
+          tip: 'Always sketch a clean big diagram first. Require exact theorem names in brackets for chords & cyclic quadrilaterals.'
+        },
+        {
+          id: 6,
+          title: 'Measuring Space: Perimeter and Area',
+          part: 'Part I',
+          prepMonth: 'Jan',
+          defaultTeachMonth: 'June',
+          exemplar: false,
+          pillars: ['mensuration', 'numbers'],
+          prereqText: '2D area formulas (triangle, trapezium, circle), square roots by prime factorisation, π calculations.',
+          tip: 'Brahmagupta’s formula is new even to strong students—simplify inside the square root using prime pairs before multiplying!'
+        },
+        {
+          id: 7,
+          title: 'The Mathematics of Maybe: Introduction to Probability',
+          part: 'Part I',
+          prepMonth: 'Jan',
+          defaultTeachMonth: 'August',
+          exemplar: false,
+          pillars: ['data', 'numbers'],
+          prereqText: 'Fractions, ratios, percentages, and listing outcomes systematically.',
+          tip: 'Watch for double-counting in dice/coin sample spaces; teach tree diagrams to make outcomes unmistakable.'
+        },
+        {
+          id: 8,
+          title: 'Predicting What Comes Next: Exploring Sequences',
+          part: 'Part I',
+          prepMonth: 'Jan',
+          defaultTeachMonth: 'October',
+          exemplar: true,
+          pillars: ['numbers', 'algebra'],
+          prereqText: 'Number patterns, powers/exponents, solving 1-variable linear equations.',
+          tip: 'Students confuse n (term number) with aₙ (term value) and mix up AP common difference (d) with GP common ratio (r).'
+        },
+        // Part II
+        {
+          id: 9,
+          title: 'Propositions and their Converses',
+          part: 'Part II',
+          prepMonth: 'Feb',
+          defaultTeachMonth: 'June',
+          exemplar: false,
+          pillars: ['geometry'],
+          prereqText: 'Parallel lines & transversals, triangle congruence basics, if–then logical statements.',
+          tip: 'One single counterexample disproves a universal statement, while examples alone never prove one. Practice both!'
+        },
+        {
+          id: 10,
+          title: 'How Quantities Combine: Understanding Data',
+          part: 'Part II',
+          prepMonth: 'Feb',
+          defaultTeachMonth: 'August',
+          exemplar: false,
+          pillars: ['data'],
+          prere
